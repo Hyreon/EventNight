@@ -2,6 +2,34 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.4.
 
+## Wishlist for MVP
+
+- [ ] Dark mode. (Absolutely essential.)
+- [ ] A text input for adding new items.
+- [ ] A button to add these items to a list shown above.
+- [ ] The ability to remove items from the list.
+- [ ] A server that saves your preferences.
+- [ ] Loading from preferences on startup.
+- [ ] Multiple users. (needs design)
+- [ ] Another column showing the set of all users' preferences.
+
+## Wishlist for 1.0
+
+- [ ] Scroll wheel if there are many items: very important if we have 20+ items. For movies, we can expect as much.
+- [ ] Sorting and ranking items: You can rank items; the set now uses instant runoff voting on the set of group preferences.
+- [ ] Dragging items from the group to your own ranking to instantly say your preference
+- [ ] Tiers: you can move two bars to determine which items above the top you approve, and which items below the bottom you disapprove.
+- [ ] Different sorting algorithms: you can choose approval by green, or approval by gray, or most top picks
+- [ ] Elimination: toggle members of the group on and off for when you know someone's absent or present
+
+## Other major features
+
+**Multiple Groups:** Rather than serving one group, we can set up multiple groups served with a different slug per group. Groups can choose to include a password.
+
+**Ratings and History:** We can flag an event as "done." That removes it from the preferences of everyone who watched it, but stores it in a history log so that people can consider a rewatch.
+
+**Movie Database Integration:** Fuzzy logic for names, release dates, ratings, runtime, images and streaming availability for movies. Can be turned off for groups not choosing movies.
+
 ## Development server
 
 To start a local development server, run:
