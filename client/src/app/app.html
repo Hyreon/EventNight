@@ -234,14 +234,12 @@
       </svg>
       <h1>Hello, {{ title() }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
-      <preferenceInput (submitInputEvent)="addPreference($event)"/>
+      <preferenceInput (submitInputEvent)="preferenceList.addPreference($event)"/>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
-      @if (preferences.length > 0) {
-        @for (preference of preferences; track preference) {
-          <preference [preference]="preference" (deleteEvent)="removePreference($event)"/>
-        }
+      @if (preferenceList.anyLoaded()) {
+        <preferenceList/>
       } @else {
         <div class="pill-group">
           @for (item of [
