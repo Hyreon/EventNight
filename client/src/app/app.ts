@@ -11,6 +11,11 @@ import { Preference } from './preference';
 export class App {
   protected readonly title = signal('EventNight');
 
+  protected interactable() {
+    //return serverIsUp && !busy;
+    return true;
+  }
+
   protected preferences: string[] = [];
 
   protected addPreference(preference: string) {

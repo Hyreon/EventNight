@@ -1,22 +1,23 @@
 import { Component, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'preference',
   template: `
-    <div [contentEditable]="interactable()" (click)="selectInput()">{{ defaultText() }}</div>
+    <label for="framework">
+      Add Preference
+      <input id="framework" type="text" [(ngModel)]="preference" />
+    </label>
+    <button (click)="selectInput()">Submit</button>
   `,
+  imports: [FormsModule],
 })
 export class Preference {
-  defaultText = input<string>;
+  preference = '';
   submitInputEvent = output<string>();
-
-  protected interactable() {
-    //return serverIsUp && !busy;
-    return true;
-  }
 
   protected selectInput() {
     //todo figure out how to update app preferences when clicked here
-    this.submitInputEvent.emit('Thing 1');
+    this.submitInputEvent.emit(this.preference);
   }
 }
