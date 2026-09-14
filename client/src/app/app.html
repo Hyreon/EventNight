@@ -234,13 +234,13 @@
       </svg>
       <h1>Hello, {{ title() }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
-      <preference (submitInputEvent)="addPreference($event)"/>
+      <preferenceInput (submitInputEvent)="addPreference($event)"/>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
       @if (preferences.length > 0) {
         @for (preference of preferences; track preference) {
-          <div>{{preference}}</div>
+          <preference [preference]="preference" (deleteEvent)="removePreference($event)"/>
         }
       } @else {
         <div class="pill-group">

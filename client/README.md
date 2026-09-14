@@ -5,9 +5,9 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 ## Wishlist for MVP
 
 - [ ] Dark mode. (Absolutely essential.)
-- [ ] A text input for adding new items.
-- [ ] A button to add these items to a list shown above.
-- [ ] The ability to remove items from the list.
+- [x] A text input for adding new items.
+- [x] A button to add these items to a list shown above.
+- [x] The ability to remove items from the list.
 - [ ] A server that saves your preferences.
 - [ ] Loading from preferences on startup.
 - [ ] Multiple users. (needs design)
