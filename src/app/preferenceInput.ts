@@ -8,16 +8,15 @@ import { FormsModule } from '@angular/forms';
       Add Preference
       <input id="textInput" type="text" [(ngModel)]="preference" />
     </label>
-    <button (click)="selectInput()">Submit</button>
+    <button (click)="submitPreference()">Submit</button>
   `,
   imports: [FormsModule],
 })
 export class PreferenceInput {
-  preference = '';
+  preference = 'Movie here...';
   submitInputEvent = output<string>();
 
-  protected selectInput() {
-    //todo figure out how to update app preferences when clicked here
+  protected submitPreference() {
     this.submitInputEvent.emit(this.preference);
   }
 }
