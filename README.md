@@ -30,6 +30,12 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 **Movie Database Integration:** Fuzzy logic for names, release dates, ratings, runtime, images and streaming availability for movies. Can be turned off for groups not choosing movies.
 
+## Angular features not used from tutorial
+
+- @defer - this may be useful when there's a very large list of preferences, or a detailed dropdown
+- NgOptimizedImage directive - may be useful for preference images
+- Angular router - haven't even looked at this, pretty sure EventNight will be a one pager though
+
 ## Development server
 
 To start a local development server, run:
