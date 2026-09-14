@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { PreferenceInput } from './preferenceInput';
 import { Preference } from './preference';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Preference],
+  imports: [RouterOutlet, PreferenceInput, Preference],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -20,5 +21,10 @@ export class App {
 
   protected addPreference(preference: string) {
     this.preferences.push(preference);
+  }
+
+  protected removePreference(preference: string) {
+    const index = this.preferences.indexOf(preference);
+    this.preferences.splice(index, 1);
   }
 }

@@ -4,20 +4,20 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'preference',
   template: `
-    <label for="framework">
-      Add Preference
-      <input id="framework" type="text" [(ngModel)]="preference" />
-    </label>
-    <button (click)="selectInput()">Submit</button>
+    <div>
+      <td>{{ preference() }}</td>
+      <td><button (click)="delete()">x</button></td>
+    </div>
   `,
   imports: [FormsModule],
 })
 export class Preference {
-  preference = '';
-  submitInputEvent = output<string>();
+  editable = input<boolean>(true);
+  preference = input<string>();
 
-  protected selectInput() {
-    //todo figure out how to update app preferences when clicked here
-    this.submitInputEvent.emit(this.preference);
+  deleteEvent = output<string>();
+
+  protected delete() {
+    this.deleteEvent.emit(<string>this.preference());
   }
 }
