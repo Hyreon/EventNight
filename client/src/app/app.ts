@@ -17,5 +17,6 @@ export class App {
     return true;
   }
 
-  preferenceList: PreferenceList = new PreferenceList();
+  personalPreferenceList: PreferenceList = new PreferenceList();
+  groupPreferenceList: PreferenceList = new PreferenceList();
 }
