@@ -7,12 +7,11 @@ import { PreferenceOperation } from './preferenceList';
   selector: 'preference',
   template: `
     <div>
-      <td>Here's one</td> <!-- debugging preference output -->
       <td>{{ preference()?.name }}</td>
       <td><button (click)="move(0, true)">⯭</button></td>
       <td><button (click)="move(-1, true)">⯯</button></td>
-      <td><button (click)="move(1, false)">🡩</button></td>
-      <td><button (click)="move(-1, false)">🡣</button></td>
+      <td><button (click)="move(-1, false)">🡩</button></td>
+      <td><button (click)="move(1, false)">🡣</button></td>
       <td><button (click)="delete()">x</button></td>
     </div>
   `,
@@ -24,6 +23,7 @@ export class Preference {
 
   deleteEvent = output<PreferenceItem>();
   moveEvent = output<PreferenceOperation>();
+  configureEvent = output<PreferenceItem>();
 
   protected delete() {
     this.deleteEvent.emit(<PreferenceItem>this.preference());
@@ -43,4 +43,5 @@ export class Preference {
 export interface PreferenceItem {
   id: number;
   name: string;
+  experienced: boolean;
 }

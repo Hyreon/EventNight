@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PreferenceInput } from './preferenceInput';
-import { PreferenceList } from './preferenceList';
+import { PreferenceList, PreferenceListComponent } from './preferenceList';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PreferenceInput, PreferenceList],
+  imports: [RouterOutlet, PreferenceInput, PreferenceListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
