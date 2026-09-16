@@ -13,20 +13,22 @@ import { PreferenceOperation } from './preferenceList';
       <td><button (click)="move(-1, false)">🡩</button></td>
       <td><button (click)="move(1, false)">🡣</button></td>
       <td><button (click)="delete()">x</button></td>
+      <td><input type="checkbox" (click)="setExperienced(preference().experienced)" [(ngModel)]="preference().experienced" /></td>
     </div>
   `,
   imports: [FormsModule],
 })
 export class Preference {
   editable = input<boolean>(true);
-  preference = input<PreferenceItem>();
+  preference = input.required<PreferenceItem>();
 
   deleteEvent = output<PreferenceItem>();
   moveEvent = output<PreferenceOperation>();
   configureEvent = output<PreferenceItem>();
+  changeEvent = output<PreferenceItem>();
 
   protected delete() {
-    this.deleteEvent.emit(<PreferenceItem>this.preference());
+    this.deleteEvent.emit(this.preference());
   }
 
   protected move(offset: number, absolute: boolean) {
@@ -37,6 +39,11 @@ export class Preference {
       context: () => true,
       aboveFiltered: true,
     } as PreferenceOperation);
+  }
+
+  protected setExperienced(experienced: boolean) {
+    this.preference().experienced = experienced;
+    this.changeEvent.emit(this.preference());
   }
 }
 

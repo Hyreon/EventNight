@@ -7,12 +7,15 @@ import { Preference, PreferenceItem } from './preference';
   selector: 'preferenceList',
   template: `
     <p>Preferences here...</p>
-    @for (preference of preferenceList().preferences(); track preference.id) {
+    <button (click)="applyFilter(ONLY_SEEN)">Filter to seen</button>
+    <button (click)="applyFilter(ONLY_NEW)">Filter to new</button>
+    <button (click)="clearFilters()">Clear filters</button>
+    @for (preference of getPreferences(); track preference.id) {
       <preference
         [preference]="preference"
-        (deleteEvent)="preferenceList().removePreference($event)"
-        (moveEvent)="preferenceList().movePreference($event)"
-        (configureEvent)="preferenceList().configurePreference($event)"
+        (deleteEvent)="preferenceList().removeItem($event)"
+        (moveEvent)="preferenceList().moveItem($event)"
+        (changeEvent)="preferenceList().changeItem($event)"
       />
     }
   `,
@@ -20,23 +23,44 @@ import { Preference, PreferenceItem } from './preference';
 })
 export class PreferenceListComponent {
   preferenceList = input.required<PreferenceList>();
+  filters: ((item: PreferenceItem) => boolean)[] = [];
+
+  ONLY_SEEN = (item: PreferenceItem) => item.experienced;
+  ONLY_NEW = (item: PreferenceItem) => !item.experienced;
+
+  getPreferences() {
+    let preferences = this.preferenceList().preferences();
+    this.filters.forEach((filter) => {
+      preferences = preferences.filter(filter);
+    });
+    return preferences;
+  }
+
+  applyFilter(filter: (item: PreferenceItem) => boolean) {
+    this.filters.push(filter);
+  }
+
+  clearFilters() {
+    this.filters = [];
+  }
 }
 
-
+//smart data container for the actual preference list
+//contains angular hooks for reading and writing
 export class PreferenceList {
   private _preferences = signal<PreferenceItem[]>([]);
   preferences = this._preferences.asReadonly();
   nextId = 0;
 
-  public addPreference(preference: string) {
+  public addItem(preference: string) {
     console.log('Added, now', this.preferences()); //debugging preference output
-    this._preferences.update(list => [
+    this._preferences.update((list) => [
       ...list,
       {
         id: this.nextId++,
         name: preference,
         experienced: false,
-      } as PreferenceItem
+      } as PreferenceItem,
     ]);
   }
 
@@ -44,8 +68,9 @@ export class PreferenceList {
     return this.preferences().length > 0;
   }
 
-  public movePreference(preferenceOperation: PreferenceOperation) {
-    this._preferences.update(list => {
+  //general function for moving items
+  public moveItem(preferenceOperation: PreferenceOperation) {
+    this._preferences.update((list) => {
       const startIndex = list.indexOf(preferenceOperation.item);
       let endIndex = preferenceOperation.absolute
         ? preferenceOperation.destination
@@ -60,13 +85,12 @@ export class PreferenceList {
     });
   }
 
-  public removePreference(preference: PreferenceItem) {
-    this._preferences.update(list =>
-      list.filter(p => p !== preference));
+  public removeItem(preference: PreferenceItem) {
+    this._preferences.update((list) => list.filter((p) => p !== preference));
   }
 
-  public configurePreference(preference: PreferenceItem) {
-    this._preferences.update(list => list);
+  public changeItem(preference: PreferenceItem) {
+    this._preferences.update((list) => list);
     //change nothing, Preference handled its own mutation; but update the display
   }
 }
@@ -75,6 +99,8 @@ export interface PreferenceOperation {
   item: PreferenceItem;
   destination: number; //index to set
   absolute: boolean; //whether to set the current index (true) or nudge it (false)
+
+  //currently unsupported; allows drag & drop even inside a filtered list
   context: (item: PreferenceItem) => boolean; //among these items
   aboveFiltered: boolean; //whether to go above or below items currently filtered out
 }
